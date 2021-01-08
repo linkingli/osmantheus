@@ -1,10 +1,12 @@
 package petals
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/go-ping/ping"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	"log"
+	"os"
 	"osmantheus/client"
 )
 
@@ -106,13 +108,13 @@ func ListEoughController() {
 }
 
 func prompt() {
-	//fmt.Printf("-> Press Return key to continue.")
-	//scanner := bufio.NewScanner(os.Stdin)
-	//for scanner.Scan() {
-	//	break
-	//}
-	//if err := scanner.Err(); err != nil {
-	//	panic(err)
-	//}
+	fmt.Printf("-> Press Return key to continue.")
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		break
+	}
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
 	fmt.Println()
 }

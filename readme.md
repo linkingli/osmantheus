@@ -1,5 +1,5 @@
 ```
-osmantheus ，用于解决容器与k8s平台问题的工具
+osmantheus ，与容器和k8s一起玩耍的小工具
 
 ```
 
