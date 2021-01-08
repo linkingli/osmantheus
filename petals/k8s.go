@@ -40,7 +40,7 @@ func TestNodeConnect() {
 }
 func ServerPing(target string, nodeName string) bool {
 
-	pinger, err := ping.NewPinger("127.0.01")
+	pinger, err := ping.NewPinger(target)
 	if err != nil {
 		panic(err)
 	}
