@@ -1,11 +1,10 @@
 package petals
 
 import (
-	"bufio"
 	"fmt"
+	"github.com/go-ping/ping"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	"log"
-	"os"
 	"osmantheus/client"
 )
 
@@ -20,6 +19,46 @@ func ListNotRunngPod() {
 		}
 	}
 	prompt()
+}
+func TestNodeConnect() {
+
+	k8sClient := client.K8sClient()
+	list, _ := k8sClient.CoreV1().Nodes().List(v1.ListOptions{})
+	fmt.Println("---  node cant connect ---")
+	for _, node := range list.Items {
+		addresses := node.Status.Addresses
+		//addresses:
+		// - address: 192.168.65.3
+		// type: InternalIP
+		// - address: docker-desktop
+		// type: Hostname
+		address := addresses[0]
+		ServerPing(address.Address, node.Name)
+		fmt.Println(address)
+	}
+
+}
+func ServerPing(target string, nodeName string) bool {
+
+	pinger, err := ping.NewPinger("127.0.01")
+	if err != nil {
+		panic(err)
+	}
+	pinger.Count = 3
+	err = pinger.Run()
+	if err != nil {
+		panic(err)
+	}
+	stats := pinger.Statistics()
+	// 有回包，就是说明IP是可用的
+	if stats.PacketsRecv >= 1 {
+		return true
+		fmt.Println("ok")
+
+	}
+	fmt.Println("----", nodeName, target, "------")
+	return false
+
 }
 
 func ListEoughController() {
@@ -67,13 +106,13 @@ func ListEoughController() {
 }
 
 func prompt() {
-	fmt.Printf("-> Press Return key to continue.")
-	scanner := bufio.NewScanner(os.Stdin)
-	for scanner.Scan() {
-		break
-	}
-	if err := scanner.Err(); err != nil {
-		panic(err)
-	}
+	//fmt.Printf("-> Press Return key to continue.")
+	//scanner := bufio.NewScanner(os.Stdin)
+	//for scanner.Scan() {
+	//	break
+	//}
+	//if err := scanner.Err(); err != nil {
+	//	panic(err)
+	//}
 	fmt.Println()
 }
