@@ -13,5 +13,9 @@ func main() {
 	petals.ListEoughController()
 	//测试节点之间的网络互通
 	petals.TestNodeConnect()
+	//istio demo health
+	petals.TestIstioInject()
+	// istioctl info
+	petals.IstioBasicInfo()
 
 }
